@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import actions from './actions';
+import actions from './index';
 import assert from 'assert';
 
 (async () => {
