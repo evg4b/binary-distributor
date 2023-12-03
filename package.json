@@ -1,13 +1,41 @@
 {
   "name": "binary-distributor",
-  "packageManager": "yarn@4.0.2",
+  "version": "2.0.0",
+  "description": "Lightweight library to distribute binaries via npm",
+  "keywords": [
+    "binary",
+    "distribute",
+    "package",
+    "cli",
+    "cli-tool",
+    "execute"
+  ],
+  "homepage": "https://github.com/evg4b/binary-distributor",
+  "bugs": {
+    "url": "https://github.com/evg4b/binary-distributor/issues"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Evgeny Abramovich",
+    "email": "evg.abramovitch@gmail.com",
+    "url": "https://github.com/evg4b"
+  },
+  "bin": "./dist/cli.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:evg4b/binary-distributor.git"
+  },
   "scripts": {
     "build": "tsup"
+  },
+  "packageManager": "yarn@4.0.2",
+  "dependencies": {
+    "typescript": "^5.3.2"
   },
   "devDependencies": {
     "tsup": "^8.0.1"
   },
-  "dependencies": {
-    "typescript": "^5.3.2"
+  "engines": {
+    "node": ">=18"
   }
 }
