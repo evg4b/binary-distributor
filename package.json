@@ -1,4 +1,13 @@
 {
   "name": "binary-distributor",
-  "packageManager": "yarn@4.0.2"
+  "packageManager": "yarn@4.0.2",
+  "scripts": {
+    "build": "tsup"
+  },
+  "devDependencies": {
+    "tsup": "^8.0.1"
+  },
+  "dependencies": {
+    "typescript": "^5.3.2"
+  }
 }
