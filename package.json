@@ -26,13 +26,15 @@
     "url": "git@github.com:evg4b/binary-distributor.git"
   },
   "scripts": {
-    "build": "tsup"
+    "build": "tsup",
+    "watch": "tsup --watch"
   },
   "packageManager": "yarn@4.0.2",
   "dependencies": {
     "typescript": "^5.3.2"
   },
   "devDependencies": {
+    "@types/node": "^20.10.2",
     "tsup": "^8.0.1"
   },
   "engines": {
