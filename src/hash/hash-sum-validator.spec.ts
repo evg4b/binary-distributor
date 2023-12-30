@@ -64,8 +64,33 @@ describe('hash-sum-validator', () => {
       });
     });
 
+  Object.entries(testCases)
+    .forEach(([algorithm, hashes]) => {
+      describe(`should throw validate ${ algorithm } hashes`, () => {
+        Object.entries(hashes).forEach(([fileName, hash]) => {
+          const invalidHash = jest.now().toString(16);
+          test(`should validate ${ fileName }`, async () => {
+            const file = createReadStream(resolve(dataDir, fileName));
+            const tmpFile = resolve(dataDir, fileName + '.copy');
+            const writeStream = createWriteStream(tmpFile);
+            const hashSumValidator = new HashSumValidator(algorithm, invalidHash);
+            tmpFiles.push(tmpFile);
+            await pipeline(file, hashSumValidator, writeStream)
+              .catch((error) => {
+                expect(error.message).toMatch(`Checksum mismatch: expected ${ invalidHash }, got ${ hash }`);
+              });
+          }, 10_000);
+        });
+      });
+    });
+
+  test('should fail when hash is not supported', () => {
+    expect(() => new HashSumValidator('md4', 'hash'))
+      .toThrow('error:0308010C:digital envelope routines::unsupported');
+  });
+
   afterEach(async () => {
-    await Promise.all(tmpFiles.map(file => unlink(file)));
+    await Promise.all(tmpFiles.map(unlink));
     tmpFiles = [];
   });
 });
