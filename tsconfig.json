@@ -9,6 +9,7 @@
     "alwaysStrict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
+    "incremental": true,
     "allowSyntheticDefaultImports": true,
     "typeRoots": [
       "node_modules/@types",

@@ -1,24 +1,36 @@
-import { basename, extname } from 'path';
 import assert from 'assert';
+import { basename, extname } from 'path';
+import * as process from 'process';
 import { pipeline } from 'stream/promises';
-import { HashSumValidator } from './hash-sum-validator';
-import { createGunzip } from 'zlib';
 import { extract as extractTar } from 'tar';
+import { createGunzip } from 'zlib';
+import { HashSumValidator } from './hash-sum-validator';
+
+const winExt = '.zip';
+const unitExt = '.tar.gz';
+
+const preferredExtensions: Partial<Record<NodeJS.Platform, string>> = {
+  cygwin: winExt,
+  darwin: unitExt,
+  linux: unitExt,
+  win32: winExt,
+};
 
 export const installBinary = async (config: Configuration) => {
   console.log(`Installing binary for ${ config.name } v${ config.version }...`);
-  const url = config.urlTemplate.replaceAll('{version}', config.version)
-    .replaceAll('{name}', config.name);
+  const ext = preferredExtensions[process.platform];
+  assert(ext, `Unsupported platform: ${ process.platform }`);
 
+  const url = config.urlTemplate.replaceAll('{version}', config.version)
+    .replaceAll('{name}', config.name)
+    .replaceAll('{platform}', process.platform)
+    .replaceAll('{arch}', process.arch)
+    .replaceAll('{ext}', ext);
 
   // const binFile = resolve(config.packageDir, basename(config.name, extname(config.name)));
   const response = await fetch(url);
-  assert(response.ok, `Failed to download binary from ${ url }`);
+  assert(response.ok, `Failed to download binary from ${ url }: ${ response.status } ${ response.statusText }`);
   assert(response.body, 'Response body is empty');
-
-
-  console.log(extname(url))
-  console.log(basename(url, extname(url)));
 
   await pipeline(
     response.body as any,
@@ -28,5 +40,5 @@ export const installBinary = async (config: Configuration) => {
 };
 
 const extractTarGz = (dir: string, file: string): Array<NodeJS.ReadWriteStream | NodeJS.WritableStream> => {
-  return [createGunzip(), extractTar({ cwd: dir }, [file])]
-}
+  return [createGunzip(), extractTar({ cwd: dir }, [file])];
+};

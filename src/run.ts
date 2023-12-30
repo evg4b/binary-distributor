@@ -1,9 +1,8 @@
-import { resolve } from "path";
-import { extractConfiguration } from "./extract-configuration";
+import assert from 'assert';
 import { execFileSync } from 'child_process';
-import * as process from "process";
-import { verifyInstallation } from "./verify-installation";
-import assert from "assert";
+import { resolve } from 'path';
+import * as process from 'process';
+import { extractConfiguration } from './extract-configuration';
 
 (async (): Promise<void> => {
   const packageJsonPath = process.env['npm_package_json'];
@@ -11,7 +10,7 @@ import assert from "assert";
 
   const configuration = extractConfiguration(packageJsonPath);
   const bin = resolve(configuration.packageDir, configuration.name);
-  await verifyInstallation(configuration);
+
   execFileSync(bin, process.argv, {
     stdio: 'inherit',
     cwd: process.env.INIT_CWD,

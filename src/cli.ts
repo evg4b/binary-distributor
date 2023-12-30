@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 import assert from 'assert';
-import { install } from "./install";
-import { uninstall } from "./uninstall";
+import { install } from './install';
+import { uninstall } from './uninstall';
 
-const actions: Record<string, Action> = { install, uninstall, };
+const actions: Record<string, Action> = { install, uninstall };
 
 (async () => {
   const [_node, _packageMng, command, ...params] = process.argv;

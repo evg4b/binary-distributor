@@ -18,3 +18,5 @@ interface Configuration {
   packageDir: string;
   hashAlgorithm: string;
 }
+
+type SupportedPlatforms = 'darwin' | 'linux' | 'win32' | 'cygwin';
