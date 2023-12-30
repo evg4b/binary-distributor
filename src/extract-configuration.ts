@@ -4,11 +4,9 @@ import { dirname } from 'path';
 const validatePackageJson = (packageJson: PackageJson) => {
   assert(packageJson.name, 'package.json must have a name');
   assert(packageJson.version, 'package.json must have a version');
-  assert(packageJson['binary-distributor'], 'package.json must have a binary-distributor section');
-  assert(
-    packageJson['binary-distributor']['url-template'],
-    'package.json must have a binary-distributor.url-template section'
-  );
+  const configuration = packageJson['binary-distributor'];
+  assert(configuration, 'package.json must have a binary-distributor section');
+  assert(configuration['url-template'], 'package.json must have a binary-distributor.url-template section');
 };
 
 export const extractConfiguration = (packageJsonPath: string): Configuration => {
