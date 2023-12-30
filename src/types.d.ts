@@ -8,6 +8,7 @@ interface PackageJson {
 
 interface RawConfiguration {
   'url-template': string;
+  hashAlgorithm?: string;
 }
 
 interface Configuration {
@@ -15,4 +16,5 @@ interface Configuration {
   version: string;
   urlTemplate: string;
   packageDir: string;
+  hashAlgorithm: string;
 }

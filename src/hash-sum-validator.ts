@@ -1,5 +1,5 @@
-import { Transform } from "stream";
-import { createHash, Hash } from "crypto";
+import { Transform } from 'stream';
+import { createHash, Hash } from 'crypto';
 
 export class HashSumValidator extends Transform {
   private hash: Hash;

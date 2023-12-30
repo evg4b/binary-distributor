@@ -21,7 +21,8 @@ export const extractConfiguration = (packageJsonPath: string): Configuration => 
     name: packageJson.name,
     version: packageJson.version,
     urlTemplate: rawConfiguration['url-template'],
-    packageDir: dirname(packageJsonPath)
+    packageDir: dirname(packageJsonPath),
+    hashAlgorithm: rawConfiguration.hashAlgorithm ?? 'sha256',
   };
 };
 
