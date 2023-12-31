@@ -5,6 +5,7 @@ import { pipeline } from 'stream/promises';
 import { extract as extractTar } from 'tar';
 import { createGunzip } from 'zlib';
 import { HashSumValidator } from '../hash/hash-sum-validator';
+import { Readable } from 'stream';
 
 const winExt = '.zip';
 const unitExt = '.tar.gz';
@@ -33,7 +34,7 @@ export const installBinary = async (config: Configuration) => {
   assert(response.body, 'Response body is empty');
 
   await pipeline(
-    response.body as any,
+    response.body as unknown as Readable,
     new HashSumValidator(config.hashAlgorithm, '9c890ad028a9076d867237ce8e697fcb9e98edb6b116ccaecd556d74de700148'),
     ...extractTarGz(config.packageDir, basename(config.name, extname(config.name))),
   );

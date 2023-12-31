@@ -4,9 +4,11 @@ module.exports = {
     'dist/**',
     'debug/**',
     'node_modules/**',
+    'jest.config.js',
+    'babel.config.js',
   ],
   'env': {
-    'browser': true,
+    'browser': false,
     'es2021': true
   },
   'extends': [
@@ -52,5 +54,6 @@ module.exports = {
       'always'
     ],
     '@typescript-eslint/no-var-requires': 'off',
+    '@typescript-eslint/no-unused-vars': ['error', { 'varsIgnorePattern': '_*' }]
   }
 };
