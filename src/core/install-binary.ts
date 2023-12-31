@@ -9,7 +9,8 @@ import { createGunzip } from 'zlib';
 export const installBinary = async (config: Configuration) => {
   console.log(`Installing binary for ${ config.name } v${ config.version }...`);
 
-  const url = config.urlTemplate.replaceAll('{version}', config.version)
+  const url = config.urlTemplate
+    .replaceAll('{version}', config.version)
     .replaceAll('{name}', config.name)
     .replaceAll('{platform}', process.platform)
     .replaceAll('{arch}', process.arch);
@@ -22,6 +23,8 @@ export const installBinary = async (config: Configuration) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     response.body as any,
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     ...extractTarGz(config.packageDir, basename(config.name, extname(config.name))),
   );
 };
