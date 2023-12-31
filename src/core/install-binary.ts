@@ -1,41 +1,27 @@
 import assert from 'assert';
 import { basename, extname } from 'path';
-import * as process from 'process';
+import process from 'process';
 import { pipeline } from 'stream/promises';
 import { extract as extractTar } from 'tar';
 import { createGunzip } from 'zlib';
-import { HashSumValidator } from '../hash/hash-sum-validator';
-import { Readable } from 'stream';
 
-const winExt = '.zip';
-const unitExt = '.tar.gz';
-
-const preferredExtensions: Partial<Record<NodeJS.Platform, string>> = {
-  cygwin: winExt,
-  darwin: unitExt,
-  linux: unitExt,
-  win32: winExt,
-};
 
 export const installBinary = async (config: Configuration) => {
   console.log(`Installing binary for ${ config.name } v${ config.version }...`);
-  const ext = preferredExtensions[process.platform];
-  assert(ext, `Unsupported platform: ${ process.platform }`);
 
   const url = config.urlTemplate.replaceAll('{version}', config.version)
     .replaceAll('{name}', config.name)
     .replaceAll('{platform}', process.platform)
-    .replaceAll('{arch}', process.arch)
-    .replaceAll('{ext}', ext);
+    .replaceAll('{arch}', process.arch);
 
-  // const binFile = resolve(config.packageDir, basename(config.name, extname(config.name)));
   const response = await fetch(url);
   assert(response.ok, `Failed to download binary from ${ url }: ${ response.status } ${ response.statusText }`);
   assert(response.body, 'Response body is empty');
 
   await pipeline(
-    response.body as unknown as Readable,
-    new HashSumValidator(config.hashAlgorithm, '9c890ad028a9076d867237ce8e697fcb9e98edb6b116ccaecd556d74de700148'),
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    response.body as any,
     ...extractTarGz(config.packageDir, basename(config.name, extname(config.name))),
   );
 };

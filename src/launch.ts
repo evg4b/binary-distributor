@@ -1,6 +1,6 @@
 import { execFileSync } from 'child_process';
 import { resolve } from 'path';
-import * as process from 'process';
+import process from 'process';
 import { extractConfiguration } from './core/extract-configuration';
 
 export const launch = (dir: string): void => {
