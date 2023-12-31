@@ -4,7 +4,7 @@ import * as process from 'process';
 import { pipeline } from 'stream/promises';
 import { extract as extractTar } from 'tar';
 import { createGunzip } from 'zlib';
-import { HashSumValidator } from './hash/hash-sum-validator';
+import { HashSumValidator } from '../hash/hash-sum-validator';
 
 const winExt = '.zip';
 const unitExt = '.tar.gz';

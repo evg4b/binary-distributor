@@ -9,7 +9,6 @@
     "alwaysStrict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
-    "incremental": true,
     "allowSyntheticDefaultImports": true,
     "noImplicitThis": true,
     "allowUnreachableCode": false,

@@ -1,7 +1,7 @@
 import assert from 'assert';
 import { dirname } from 'path';
 
-const validatePackageJson = (packageJson: PackageJson) => {
+export const validatePackageJson = (packageJson: PackageJson) => {
   assert(packageJson.name, 'package.json must have a name');
   assert(packageJson.version, 'package.json must have a version');
   const configuration = packageJson['binary-distributor'];
